@@ -48,6 +48,20 @@ WSL Setup (SITL)
     ./waf copter
 
 -----------------------------------
+West Point Area Setup
+-----------------------------------
+-In order to add West Point as the area for the sim to run, you have to first add it as a home location!
+1. mkdir -p ~/.config/ardupilot
+
+2. nano ~/.config/ardupilot/locations.txt
+
+3. WestPoint=41.395000,-73.955000,10,0
+
+Now, if you wish to simulate from West Point, run the following when simulating:
+
+    sim_vehicle.py -v ArduCopter -f quad -L WestPoint --console --map
+
+-----------------------------------
 Simulation Setup/Running
 -----------------------------------
 
@@ -56,16 +70,47 @@ Simulation Setup/Running
 
 2. Open QGC (Windows)
 
-3. Get Windows IP
+3. Get IP 
+    --within WL, run:
+    ip route
+    
+    --use the 'default via' address
 
 4. In MAVProxy (WSL), connect to Windows:
-    output add <WINDOWS_IP>:14560
+    output add <WSL_HOST_IP>:14560
 
 5. In QGC:
     -Arm (Loiter)
     -Takeoff
-    -However
+    -Hover
 
 6. Run autonomy script
+
+7. After complete, run log analysis script
+
+-----------------------------------
+YOLO Simulation Setup/Running
+-----------------------------------
+
+1. Start SITL w/in WSL:
+    sim_vehicle.py -v ArduCopter -f quad --console --map
+
+2. Open QGC (Windows)
+
+3. Get IP 
+    --within WL, run:
+    ip route
+    
+    --use the 'default via' address
+
+4. In MAVProxy (WSL), connect to Windows:
+    output add <WSL_HOST_IP>:14560
+
+5. In QGC, make a mission plan! I.e. loop to traverse...
+    -Arm (Loiter)
+    -Takeoff
+    -Hover
+
+6. Run yolo_patrol script within yolo_tests (follow directions!)
 
 7. After complete, run log analysis script
